@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - vungle (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `.symlinks/flutter/ios`)
+  - vungle (from `.symlinks/plugins/vungle/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: ".symlinks/flutter/ios"
+  vungle:
+    :path: ".symlinks/plugins/vungle/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
+  vungle: 2803cc6a37b058ad1838dfa96f35be858268f865
+
+PODFILE CHECKSUM: aff02bfeed411c636180d6812254b2daeea14d09
+
+COCOAPODS: 1.6.2
