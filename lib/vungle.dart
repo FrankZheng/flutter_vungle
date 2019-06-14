@@ -69,12 +69,12 @@ class Vungle {
   }
 
   static Future<UserConsentStatus> getConsentStatus() async {
-    final status = _channel.invokeMethod('getConsentStatus', null);
+    final String status = await _channel.invokeMethod('getConsentStatus', null);
     return _statusStringToUserConsentStatus[status];
   }
 
   static Future<String> getConsentMessageVersion() async {
-    final version = _channel.invokeMethod('getConsentMessageVersion', null);
+    final String version = await _channel.invokeMethod('getConsentMessageVersion', null);
     return version;
   }
   

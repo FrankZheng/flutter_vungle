@@ -9,6 +9,8 @@ import com.vungle.warren.LoadAdCallback;
 import com.vungle.warren.PlayAdCallback;
 import com.vungle.warren.Vungle;
 
+import org.w3c.dom.Text;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +27,15 @@ public class VunglePlugin implements MethodCallHandler {
 
   private final Registrar registrar;
   private final MethodChannel channel;
+  private static final Map<String, Vungle.Consent> strToConsentStatus = new HashMap<>();
+  private static final Map<Vungle.Consent, String> consentStatusToStr = new HashMap<>();
+  static {
+    strToConsentStatus.put("Accepted", Vungle.Consent.OPTED_IN);
+    strToConsentStatus.put("Denied", Vungle.Consent.OPTED_OUT);
+    consentStatusToStr.put(Vungle.Consent.OPTED_IN, "Accepted");
+    consentStatusToStr.put(Vungle.Consent.OPTED_OUT, "Denied");
+  }
+
 
   /** Plugin registration. */
   public static void registerWith(Registrar registrar) {
@@ -49,6 +60,8 @@ public class VunglePlugin implements MethodCallHandler {
       callPlayAd(call, result);
     } else if(call.method.equals("isAdPlayable")) {
       callIsAdPlayable(call, result);
+    } else if(call.method.equals("updateConsentStatus")) {
+      callUpdateConsentStatus(call, result);
     } else {
       result.notImplemented();
     }
@@ -135,8 +148,27 @@ public class VunglePlugin implements MethodCallHandler {
   private void callIsAdPlayable(MethodCall call, Result result) {
     String placementId = getAndValidatePlacementId(call, result);
     if(placementId != null) {
-      result.success(Boolean.TRUE);
+      result.success(Vungle.canPlayAd(placementId));
     }
+  }
+
+  private void callGetConsentStatus(MethodCall call, Result result) {
+    
+  }
+
+  private void callUpdateConsentStatus(MethodCall call, Result result) {
+    String consentStatus = call.argument("consentStatus");
+    String consentMessageVersion = call.argument("consentMessageVersion");
+    if(TextUtils.isEmpty(consentStatus) || TextUtils.isEmpty(consentMessageVersion)) {
+      result.error("no_consent_status", "Null or empty consent status / message version was provided", null);
+      return;
+    }
+    Vungle.Consent consent = strToConsentStatus.get(consentStatus);
+    if(consent == null) {
+      result.error("invalid_consent_status", "Invalid consent status was provided", null);
+      return;
+    }
+    Vungle.updateConsentStatus(consent, consentMessageVersion);
   }
 
   private Map<String, Object> argumentsMap(Object... args) {
