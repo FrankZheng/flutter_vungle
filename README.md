@@ -12,10 +12,10 @@ Please go to the [Vungle](https://www.vungle.com) website to create account for 
 
 ```dart
 if (Platfrom.isAndrod) {
-  Vungle.init('your_android_app_id');
+  Vungle.init('[vungle_android_app_id]');
 } else {
   //for iOS
-  Vungle.init('your_ios_app_id');
+  Vungle.init('[vungle_ios_app_id]');
 }
 
 //You need wait until the plugin initialized to load and show ads
@@ -27,7 +27,7 @@ Vungle.onInitilizeListener = () {
 
 ### Load Interstitial or rewarded video ads
 ```dart
-Vungle.loadAd('your_ios_placement_id');
+Vungle.loadAd('[vungle_placement_id]');
 
 //To know if the ad loaded
 Vungle.onAdPlayableListener = (placementId, playable) {
@@ -39,7 +39,7 @@ Vungle.onAdPlayableListener = (placementId, playable) {
 
 ### Play Interstitial or rewarded video ads
 ```dart
-if(Vungle.isAdPlayable('your_placement_id') {
+if(Vungle.isAdPlayable('[your_placement_id]') {
   Vungle.playAd(placementId);
 }
 
