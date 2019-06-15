@@ -1,6 +1,6 @@
 # vungle
 
-A plugin for [Flutter](https://fluter.io) that supports loading and displaying interstitial (full-screen), and rewarded video ads using the [Vungle SDK API](https://vungle.com/vungle-sdk/).
+A plugin for [Flutter](https://fluter.io) that supports loading and displaying interstitial and rewarded video ads using the [Vungle SDK API](https://vungle.com/vungle-sdk/).
 
 Note: This plugin is in beta, and may still have a few issues and missing APIs. Feedback and Pull Requests are welcome.
 
