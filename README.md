@@ -19,7 +19,7 @@ if (Platfrom.isAndrod) {
 }
 
 //You need wait until the plugin initialized to load and show ads
-Vungle.onInitilizeListener = () {
+Vungle.onInitializeListener = () {
   //The plugin initialized, can load ads for now
 }
 
