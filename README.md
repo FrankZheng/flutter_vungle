@@ -27,12 +27,7 @@ Vungle.onInitilizeListener = () {
 
 ### Load Interstitial or rewarded video ads
 ```dart
-if (Platfrom.isAndrod) {
-  Vungle.loadAd('your_android_placeement_id');
-} else {
-  //for iOS
-  Vungle.loadAd('your_ios_placement_id');
-}
+Vungle.loadAd('your_ios_placement_id');
 
 //To know if the ad loaded
 Vungle.onAdPlayableListener = (placementId, playable) {
@@ -44,8 +39,6 @@ Vungle.onAdPlayableListener = (placementId, playable) {
 
 ### Play Interstitial or rewarded video ads
 ```dart
-var placementId = '<your_placement_id>';
-
 if(Vungle.isAdPlayable('your_placement_id') {
   Vungle.playAd(placementId);
 }
