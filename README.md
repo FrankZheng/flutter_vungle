@@ -1,14 +1,63 @@
 # vungle
 
-A new flutter plugin project.
+A plugin for [Flutter](https://fluter.io) that supports loading and displaying interstitial (full-screen), and rewarded video ads using the [Vungle SDK API](https://vungle.com/vungle-sdk/).
+
+Note: This plugin is in beta, and may still have a few issues and missing APIs. Feedback and Pull Requests are welcome.
 
 ## Getting Started
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+Please go to the [Vungle](https://www.vungle.com) website to create account for your apps at first. You need add your apps there and you will get the ```app id``` and ```placement ids```, then use this plugin in your flutter app to do the monetization.
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+### Initialize the plugin
+
+```dart
+if (Platfrom.isAndrod) {
+  Vungle.init('your_android_app_id');
+} else {
+  //for iOS
+  Vungle.init('your_ios_app_id');
+}
+
+//You need wait until the plugin initialized to load and show ads
+Vungle.onInitilizeListener = () {
+  //The plugin initialized, can load ads for now
+}
+
+```
+
+### Load Interstitial or rewarded video ads
+```dart
+if (Platfrom.isAndrod) {
+  Vungle.loadAd('your_android_placeement_id');
+} else {
+  //for iOS
+  Vungle.loadAd('your_ios_placement_id');
+}
+
+//To know if the ad loaded
+Vungle.onAdPlayableListener = (placementId, playable) {
+  if(playable) {
+    //The ad has been loaded, could play it for now.
+  }
+}
+```
+
+### Play Interstitial or rewarded video ads
+```dart
+var placementId = '<your_placement_id>';
+
+if(Vungle.isAdPlayable('your_placement_id') {
+  Vungle.playAd(placementId);
+}
+
+Vungle.onAdStatedListener = (placementId) {
+  //Ad started to play  
+}
+
+Vungle.onAdFinishedListener = (placementId, isCTAClicked, isCompletedView) {
+  //Ad finished to play
+  //isCTAClicked - User has clicked the `download` button
+  //isCompletedView - User has viewed the video ad completely
+  
+}
+```
