@@ -19,11 +19,6 @@ class Vungle {
   static const MethodChannel _channel =
       const MethodChannel('flutter_vungle');
 
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
-
   static OnInitilizeListener onInitilizeListener;
   
   static OnAdPlayableListener onAdPlayableListener;
