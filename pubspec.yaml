@@ -1,8 +1,8 @@
 name: vungle
-description: A new flutter plugin project.
+description: Vungle plugin for Flutter applications to do monetization. 
 version: 0.0.1
-author:
-homepage:
+author: Frank Zheng<hustzxq524@gmail.com>
+homepage: https://github.com/FrankZheng/flutter_vungle
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
