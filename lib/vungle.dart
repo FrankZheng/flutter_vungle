@@ -13,22 +13,21 @@ typedef void OnAdPlayableListener(String placementId, bool playable);
 
 typedef void OnAdStartedListener(String placementId);
 
-typedef void OnAdFinishedListener(String placementId, bool isCTAClicked, bool isCompletedView);
+typedef void OnAdFinishedListener(
+    String placementId, bool isCTAClicked, bool isCompletedView);
 
 class Vungle {
-  static const MethodChannel _channel =
-      const MethodChannel('flutter_vungle');
+  static const MethodChannel _channel = const MethodChannel('flutter_vungle');
 
   static OnInitilizeListener onInitilizeListener;
-  
+
   static OnAdPlayableListener onAdPlayableListener;
-  
+
   static OnAdStartedListener onAdStartedListener;
-  
+
   static OnAdFinishedListener onAdFinishedListener;
 
   static void init(String appId) {
-
     //register callback method handler
     _channel.setMethodCallHandler(_handleMethod);
 
@@ -50,13 +49,15 @@ class Vungle {
   }
 
   static Future<bool> isAdPlayable(String placementId) async {
-    final bool isAdAvailable = await _channel.invokeMethod('isAdPlayable', <String, dynamic>{
+    final bool isAdAvailable =
+        await _channel.invokeMethod('isAdPlayable', <String, dynamic>{
       'placementId': placementId,
     });
     return isAdAvailable;
   }
 
-  static void updateConsentStatus(UserConsentStatus status, String consentMessageVersion) {
+  static void updateConsentStatus(
+      UserConsentStatus status, String consentMessageVersion) {
     _channel.invokeMethod('updateConsentStatus', <String, dynamic>{
       'consentStatus': status.toString(),
       'consentMessageVersion': consentMessageVersion,
@@ -69,11 +70,13 @@ class Vungle {
   }
 
   static Future<String> getConsentMessageVersion() async {
-    final String version = await _channel.invokeMethod('getConsentMessageVersion', null);
+    final String version =
+        await _channel.invokeMethod('getConsentMessageVersion', null);
     return version;
   }
-  
-  static const Map<String, UserConsentStatus> _statusStringToUserConsentStatus = {
+
+  static const Map<String, UserConsentStatus> _statusStringToUserConsentStatus =
+      {
     'Accepted': UserConsentStatus.Accepted,
     'Denied': UserConsentStatus.Denied,
   };
@@ -83,23 +86,23 @@ class Vungle {
     final Map<dynamic, dynamic> arguments = call.arguments;
     final String method = call.method;
 
-    if(method == 'onInitialize') {
-      if(onInitilizeListener != null) {
+    if (method == 'onInitialize') {
+      if (onInitilizeListener != null) {
         onInitilizeListener();
       }
     } else {
       final String placementId = arguments['placementId'];
-      if(method == 'onAdPlayable') {
+      if (method == 'onAdPlayable') {
         final bool playable = arguments['playable'];
-        if(onAdPlayableListener != null) {
+        if (onAdPlayableListener != null) {
           onAdPlayableListener(placementId, playable);
         }
-      } else if(method == 'onAdStarted') {
-        if(onAdStartedListener != null) {
+      } else if (method == 'onAdStarted') {
+        if (onAdStartedListener != null) {
           onAdStartedListener(placementId);
         }
-      } else if(method == 'onAdFinished') {
-        final bool isCTAClicked = arguments['isCTAClicked']; 
+      } else if (method == 'onAdFinished') {
+        final bool isCTAClicked = arguments['isCTAClicked'];
         final bool isCompletedView = arguments['isCompletedView'];
         onAdFinishedListener(placementId, isCTAClicked, isCompletedView);
       } else {
@@ -108,6 +111,4 @@ class Vungle {
     }
     return Future<dynamic>.value(null);
   }
-
-
 }
