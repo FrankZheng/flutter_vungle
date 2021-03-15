@@ -6,7 +6,7 @@ import 'package:vungle/vungle.dart';
 void main() {
   String appId;
   String placementId;
-  if(Platform.isAndroid) {
+  if (Platform.isAndroid) {
     appId = '5adff6afb2cadf62871219ff';
     placementId = 'DEFAULT-3224603';
   } else {
@@ -29,7 +29,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  
   bool sdkInit = false;
   bool adLoaded = false;
 
@@ -42,12 +41,12 @@ class _MyAppState extends State<MyApp> {
 
     Vungle.onInitilizeListener = () {
       setState(() {
-        sdkInit = true;  
+        sdkInit = true;
       });
     };
 
     Vungle.onAdPlayableListener = (placemenId, playable) {
-      if(playable) {
+      if (playable) {
         setState(() {
           adLoaded = true;
         });
@@ -59,12 +58,12 @@ class _MyAppState extends State<MyApp> {
     };
 
     Vungle.onAdFinishedListener = (placementId, isCTAClicked, completedView) {
-      print('ad finished, isCTAClicked:($isCTAClicked), completedView:($completedView)');
+      print(
+          'ad finished, isCTAClicked:($isCTAClicked), completedView:($completedView)');
       setState(() {
         adLoaded = false;
       });
     };
-
   }
 
   void onInit() {
@@ -76,7 +75,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void onPlayAd() async {
-    if(await Vungle.isAdPlayable(placementId)) {
+    if (await Vungle.isAdPlayable(placementId)) {
       Vungle.playAd(placementId);
     } else {
       print('The ad is not ready to play');
@@ -95,16 +94,25 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              RaisedButton(child: Text(
-                sdkInit ? 'Vungle SDK initialized - $appId' : 'Init Vungle SDK - $appId'
-                ), onPressed: sdkInit ? null : onInit,),
-              RaisedButton(child: Text(
-                adLoaded ? 'Ad Loaded - $placementId' : 'Load Ad - $placementId'
-                ), onPressed: adLoaded ? null : onLoadAd,),
-              RaisedButton(child: Text(
-                'Play Ad - $placementId'
-                ), onPressed: adLoaded ? onPlayAd : null,),
-              SizedBox(height: 20,),
+              ElevatedButton(
+                child: Text(sdkInit
+                    ? 'Vungle SDK initialized - $appId'
+                    : 'Init Vungle SDK - $appId'),
+                onPressed: sdkInit ? null : onInit,
+              ),
+              ElevatedButton(
+                child: Text(adLoaded
+                    ? 'Ad Loaded - $placementId'
+                    : 'Load Ad - $placementId'),
+                onPressed: adLoaded ? null : onLoadAd,
+              ),
+              ElevatedButton(
+                child: Text('Play Ad - $placementId'),
+                onPressed: adLoaded ? onPlayAd : null,
+              ),
+              SizedBox(
+                height: 20,
+              ),
               Text('Logs:'),
             ],
           ),

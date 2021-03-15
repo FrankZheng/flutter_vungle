@@ -5,9 +5,11 @@ import 'package:vungle/vungle.dart';
 void main() {
   const MethodChannel channel = MethodChannel('vungle');
 
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   setUp(() {
     channel.setMockMethodCallHandler((MethodCall methodCall) async {
-      return '42';
+      return 'Accepted';
     });
   });
 
@@ -15,7 +17,7 @@ void main() {
     channel.setMockMethodCallHandler(null);
   });
 
-  test('getPlatformVersion', () async {
-    expect(await Vungle.platformVersion, '42');
+  test('getContentStatus', () async {
+    expect(await Vungle.getConsentStatus(), UserConsentStatus.Accepted);
   });
 }

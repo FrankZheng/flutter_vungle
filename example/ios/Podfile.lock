@@ -6,24 +6,24 @@ PODS:
   - VungleSDK-iOS (6.3.2)
 
 DEPENDENCIES:
-  - Flutter (from `.symlinks/flutter/ios`)
+  - Flutter (from `Flutter`)
   - vungle (from `.symlinks/plugins/vungle/ios`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - VungleSDK-iOS
 
 EXTERNAL SOURCES:
   Flutter:
-    :path: ".symlinks/flutter/ios"
+    :path: Flutter
   vungle:
     :path: ".symlinks/plugins/vungle/ios"
 
 SPEC CHECKSUMS:
-  Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   vungle: e9b470935c934d5dbf7060e60340c1dbe44d9f72
   VungleSDK-iOS: 69a7f407b60281d2954ffc5eeeac349fbfed51d6
 
-PODFILE CHECKSUM: aff02bfeed411c636180d6812254b2daeea14d09
+PODFILE CHECKSUM: 8e679eca47255a8ca8067c4c67aab20e64cb974d
 
-COCOAPODS: 1.6.2
+COCOAPODS: 1.10.0
