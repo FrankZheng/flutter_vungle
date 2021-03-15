@@ -8,8 +8,7 @@ import com.vungle.warren.InitCallback;
 import com.vungle.warren.LoadAdCallback;
 import com.vungle.warren.PlayAdCallback;
 import com.vungle.warren.Vungle;
-
-import org.w3c.dom.Text;
+import com.vungle.warren.error.VungleException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +23,9 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 public class VunglePlugin implements MethodCallHandler {
 
   private static final String TAG = "VunglePlugin";
+  //here not way to get the SDK version through SDK's API, so hard coded the version.
+  //need to make it matched to the version in the build.gradle
+  private static final String SDK_VERSION = "6.9.1";
 
   private final Registrar registrar;
   private final MethodChannel channel;
@@ -62,6 +64,8 @@ public class VunglePlugin implements MethodCallHandler {
       callIsAdPlayable(call, result);
     } else if(call.method.equals("updateConsentStatus")) {
       callUpdateConsentStatus(call, result);
+    } else if (call.method.equals("sdkVersion")) {
+      result.success(SDK_VERSION);
     } else {
       result.notImplemented();
     }
@@ -82,8 +86,8 @@ public class VunglePlugin implements MethodCallHandler {
       }
 
       @Override
-      public void onError(Throwable throwable) {
-        Log.e(TAG, "Vungle SDK init failed, ", throwable);
+      public void onError(VungleException exception) {
+        Log.e(TAG, "Vungle SDK init failed, ", exception);
       }
 
       @Override
@@ -108,8 +112,8 @@ public class VunglePlugin implements MethodCallHandler {
       }
 
       @Override
-      public void onError(String s, Throwable throwable) {
-        Log.e(TAG, "Vungle ad load failed, " + s + ", ", throwable);
+      public void onError(String s, VungleException exception) {
+        Log.e(TAG, "Vungle ad load failed, " + s + ", ", exception);
         channel.invokeMethod("onAdPlayable", argumentsMap("placementId", s, "playable", Boolean.FALSE));
       }
     });
@@ -138,8 +142,33 @@ public class VunglePlugin implements MethodCallHandler {
       }
 
       @Override
-      public void onError(String s, Throwable throwable) {
-        Log.e(TAG, "Vungle ad play failed, " + s + ", ", throwable);
+      public void onError(String s, VungleException exception) {
+        Log.e(TAG, "Vungle ad play failed, " + s + ", ", exception);
+      }
+
+      @Override
+      public void onAdEnd(String id) {
+
+      }
+
+      @Override
+      public void onAdClick(String id) {
+
+      }
+
+      @Override
+      public void onAdRewarded(String id) {
+
+      }
+
+      @Override
+      public void onAdLeftApplication(String id) {
+
+      }
+
+      @Override
+      public void onAdViewed(String id) {
+
       }
     });
     result.success(Boolean.TRUE);

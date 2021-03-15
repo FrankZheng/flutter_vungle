@@ -26,6 +26,8 @@
         [self callPlayAd:call result:result];
     } else if([@"isAdPlayable" isEqualToString:call.method]) {
         [self callIsAdPlayable:call result:result];
+    } else if([@"sdkVersion" isEqualToString:call.method]) {
+        result(VungleSDKVersion);
     } else {
         result(FlutterMethodNotImplemented);
     }
