@@ -8,8 +8,7 @@ import com.vungle.warren.InitCallback;
 import com.vungle.warren.LoadAdCallback;
 import com.vungle.warren.PlayAdCallback;
 import com.vungle.warren.Vungle;
-
-import org.w3c.dom.Text;
+import com.vungle.warren.error.VungleException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -82,8 +81,8 @@ public class VunglePlugin implements MethodCallHandler {
       }
 
       @Override
-      public void onError(Throwable throwable) {
-        Log.e(TAG, "Vungle SDK init failed, ", throwable);
+      public void onError(VungleException exception) {
+        Log.e(TAG, "Vungle SDK init failed, ", exception);
       }
 
       @Override
@@ -108,8 +107,8 @@ public class VunglePlugin implements MethodCallHandler {
       }
 
       @Override
-      public void onError(String s, Throwable throwable) {
-        Log.e(TAG, "Vungle ad load failed, " + s + ", ", throwable);
+      public void onError(String s, VungleException exception) {
+        Log.e(TAG, "Vungle ad load failed, " + s + ", ", exception);
         channel.invokeMethod("onAdPlayable", argumentsMap("placementId", s, "playable", Boolean.FALSE));
       }
     });
@@ -138,8 +137,33 @@ public class VunglePlugin implements MethodCallHandler {
       }
 
       @Override
-      public void onError(String s, Throwable throwable) {
-        Log.e(TAG, "Vungle ad play failed, " + s + ", ", throwable);
+      public void onError(String s, VungleException exception) {
+        Log.e(TAG, "Vungle ad play failed, " + s + ", ", exception);
+      }
+
+      @Override
+      public void onAdEnd(String id) {
+
+      }
+
+      @Override
+      public void onAdClick(String id) {
+
+      }
+
+      @Override
+      public void onAdRewarded(String id) {
+
+      }
+
+      @Override
+      public void onAdLeftApplication(String id) {
+
+      }
+
+      @Override
+      public void onAdViewed(String id) {
+
       }
     });
     result.success(Boolean.TRUE);

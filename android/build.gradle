@@ -25,10 +25,10 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 14
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     lintOptions {
@@ -38,7 +38,7 @@ android {
 
 dependencies {  
   // Vungle SDK
-  implementation 'com.github.vungle:vungle-android-sdk:6.3.24'
+    implementation 'com.vungle:publisher-sdk-android:6.9.1'
 
   // Recommended Google Play Services
   implementation 'com.google.android.gms:play-services-basement:16.2.0'
