@@ -2,14 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 
-/// User Consent status 
-/// 
+/// User Consent status
+///
 /// This is for GDPR Users
 enum UserConsentStatus {
   Accepted,
   Denied,
 }
-
 
 typedef void OnInitilizeListener();
 
@@ -31,8 +30,13 @@ class Vungle {
 
   static OnAdFinishedListener onAdFinishedListener;
 
+  /// Get version of Vungle native SDK
+  static Future<String> getSDKVersion() async {
+    return _channel.invokeMethod('sdkVersion');
+  }
+
   /// Initialize the flutter plugin for Vungle SDK.
-  /// 
+  ///
   /// Please go to the http://www.vungle.com to apply a publisher account and register your apps.
   /// Then You will get an [appId] for each of you apps. You need pass it to plugin when call this method.
   /// Note: If you want to use flutter to develop an app for both iOS and Android, you need register two apps for each platform on vungle dashboard.
@@ -43,9 +47,9 @@ class Vungle {
   /// } else if(Platform.isIOS) {
   ///   Vungle.init('<Your-iOS-AppId>');
   /// }
-  /// 
+  ///
   /// Vungle.onInitilizeListener = () {
-  ///   //SDK has initialized, could load ads now 
+  ///   //SDK has initialized, could load ads now
   /// }
   /// ```
   static void init(String appId) {
@@ -58,7 +62,7 @@ class Vungle {
   }
 
   /// Load Ad by a [placementId]
-  /// 
+  ///
   /// After you registered your apps on the vungle dashboard, you will get a default placement with an id for each app.
   /// You could create more placements as you want. And You need call this method to load the ads for the placement.
   /// You could use [onAdPlayableListener] to know when the ad loaded.
@@ -68,7 +72,7 @@ class Vungle {
   /// } else if(Platform.isIOS) {
   ///   Vungle.loadAd('<Your-IOS-placementId>')
   /// }
-  /// 
+  ///
   /// Vungle.onAdPlayableListener = (playable, placementId) {
   ///   if(playable) {
   ///     //the ad is loaded, could play ad for now.
@@ -82,7 +86,7 @@ class Vungle {
   }
 
   /// Play ad by a [placementId]
-  /// 
+  ///
   /// When ad is loaded, you could call this method to play ad
   /// ```dart
   /// Vungle.onAdPlayableListener = (playable, placementId) {
@@ -90,11 +94,11 @@ class Vungle {
   ///     Vungle.playAd(placementId);
   ///   }
   /// }
-  /// 
+  ///
   /// Vungle.onAdStartedListener = (placementId) {
   ///   //ad started to play
   /// }
-  /// 
+  ///
   /// Vungle.onAdFinishedListener = (placementId, isCTAClicked, isCompletedView) {
   ///   if(isCTAClicked) {
   ///     //User has clicked the download button
@@ -110,9 +114,8 @@ class Vungle {
     });
   }
 
-
   /// Check if ad playable by a [placementId]
-  /// 
+  ///
   /// Sometimes, you may not cared about when ad is ready to play, you just cared if there is avaiable ads when you want to show them.
   /// You can use following code to do this:
   /// ```dart
@@ -128,11 +131,10 @@ class Vungle {
     return isAdAvailable;
   }
 
-
   /// Update Consent Status
-  /// 
+  ///
   /// For GDPR users, you may need show a consent dialog to them, and you need call this method to pass the user's decision to the SDK,
-  /// "Accepted" or "Denied". That SDK could follow the GDPR policy correctly. 
+  /// "Accepted" or "Denied". That SDK could follow the GDPR policy correctly.
   static void updateConsentStatus(
       UserConsentStatus status, String consentMessageVersion) {
     _channel.invokeMethod('updateConsentStatus', <String, dynamic>{

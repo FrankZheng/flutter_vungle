@@ -31,6 +31,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   bool sdkInit = false;
   bool adLoaded = false;
+  String sdkVersion;
 
   String get appId => widget.appId;
   String get placementId => widget.placementId;
@@ -38,6 +39,10 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+
+    Vungle.getSDKVersion().then((value) => setState(() {
+          sdkVersion = value;
+        }));
 
     Vungle.onInitilizeListener = () {
       setState(() {
@@ -113,7 +118,7 @@ class _MyAppState extends State<MyApp> {
               SizedBox(
                 height: 20,
               ),
-              Text('Logs:'),
+              Text('SDK Version: ${sdkVersion ?? ''}'),
             ],
           ),
         ),

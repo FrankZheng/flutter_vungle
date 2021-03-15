@@ -23,6 +23,9 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 public class VunglePlugin implements MethodCallHandler {
 
   private static final String TAG = "VunglePlugin";
+  //here not way to get the SDK version through SDK's API, so hard coded the version.
+  //need to make it matched to the version in the build.gradle
+  private static final String SDK_VERSION = "6.9.1";
 
   private final Registrar registrar;
   private final MethodChannel channel;
@@ -61,6 +64,8 @@ public class VunglePlugin implements MethodCallHandler {
       callIsAdPlayable(call, result);
     } else if(call.method.equals("updateConsentStatus")) {
       callUpdateConsentStatus(call, result);
+    } else if (call.method.equals("sdkVersion")) {
+      result.success(SDK_VERSION);
     } else {
       result.notImplemented();
     }
